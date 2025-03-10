@@ -1,11 +1,13 @@
+import uuid
+
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 from django.db.models import UniqueConstraint
 
 
-class ApiUserRole(models.Model):
+class UserRole(models.Model):
     """Provides possibility to use role model for authorization"""
-
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     name = models.CharField(max_length=30, unique=True)
     description = models.CharField(max_length=100, blank=True)
 
@@ -15,11 +17,12 @@ class ApiUserRole(models.Model):
 
 class ApiUser(AbstractUser):
     """User model extended with the role model functional"""
-
-    roles = models.ManyToManyField(ApiUserRole, related_name="users", blank=True)
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    roles = models.ManyToManyField(UserRole, related_name="users", blank=True)
 
 
 class Storage(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     name = models.CharField(max_length=255)
     address = models.CharField(max_length=255)
 
@@ -28,6 +31,7 @@ class Storage(models.Model):
 
 
 class Item(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     name = models.CharField(max_length=255)
 
     def __str__(self):
