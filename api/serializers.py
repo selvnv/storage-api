@@ -23,7 +23,7 @@ class ApiUserSerializer(serializers.ModelSerializer):
     class Meta:
         model = ApiUser
         fields = ["id", "username", "email", "roles", "password"]
-        extra_kwargs = {"password": {"write_only": True}}
+        extra_kwargs = {"password": {"write_only": True}, "id": {"read_only": True}}
 
     def create(self, validated_data):
         password = validated_data.pop("password")
