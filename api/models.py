@@ -7,9 +7,11 @@ from django.db.models import UniqueConstraint
 
 class UserRole(models.Model):
     """Provides possibility to use role model for authorization"""
+
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     name = models.CharField(max_length=30, unique=True)
     description = models.CharField(max_length=100, blank=True)
+    is_service = models.BooleanField(default=False)  # Служебная роль?
 
     def __str__(self):
         return self.name
@@ -17,6 +19,7 @@ class UserRole(models.Model):
 
 class ApiUser(AbstractUser):
     """User model extended with the role model functional"""
+
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     roles = models.ManyToManyField(UserRole, related_name="users", blank=True)
 
