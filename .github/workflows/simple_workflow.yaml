@@ -1,0 +1,42 @@
+name: Simple Workflow
+on:
+ push:
+  branches:
+    - 'main'
+    - 'dev'
+
+jobs:
+
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - run: echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."
+    # Клонируем репозиторий
+    - uses: actions/checkout@v4
+    # Устанавливаем Python
+    - uses: actions/setup-python@v4
+
+    # Установка зависимостей
+    - name: install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install uv
+        uv sync
+
+    # Выполнение миграций
+    - name: make migrations
+      run: |
+        python manage.py makemigrations
+        python manage.py migrate
+
+    # Запуск сервера
+    - name: run server
+      run: |
+        python manage.py runserver &
+        sleep 10
+
+    # Запуск тестов
+    - name: test api
+      run: |
+        curl -X GET http://127.0.0.1:8000/user/
+        curl -X GET http://127.0.0.1:8000/user_role/
