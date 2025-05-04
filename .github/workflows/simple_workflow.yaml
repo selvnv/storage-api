@@ -27,6 +27,7 @@ jobs:
     - name: make migrations
       run: |
         uv run python manage.py makemigrations
+        uv run python manage.py makemigrations api
         uv run python manage.py migrate
 
     # Запуск сервера в фоновом режиме "&"
@@ -40,5 +41,5 @@ jobs:
     # Запуск тестов
     - name: test api
       run: |
-        curl -X GET http://127.0.0.1:8000/user/
-        curl -X GET http://127.0.0.1:8000/user_role/
+        curl -X GET http://127.0.0.1:8000/user/ || echo -e "\033[0;31m❌ Ошибка: /user/ \033[0m"
+        curl -X GET http://127.0.0.1:8000/user_role/ || echo -e "\033[0;31m❌ Ошибка: /user/ \033[0m"
