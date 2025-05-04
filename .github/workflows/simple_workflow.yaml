@@ -41,5 +41,5 @@ jobs:
     # Запуск тестов
     - name: test api
       run: |
-        curl -X GET http://127.0.0.1:8000/user/ || echo -e "\033[0;31m❌ Ошибка: /user/ \033[0m"
-        curl -X GET http://127.0.0.1:8000/user_role/ || echo -e "\033[0;31m❌ Ошибка: /user/ \033[0m"
+        curl -X GET http://127.0.0.1:8000/user/ || echo -e "\033[0;31m Ошибка: /user/ \033[0m"
+        curl -X GET http://127.0.0.1:8000/user_role/ || echo -e "\033[0;31m Ошибка: /user/ \033[0m"
