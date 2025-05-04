@@ -29,11 +29,13 @@ jobs:
         uv run python manage.py makemigrations
         uv run python manage.py migrate
 
-    # Запуск сервера
+    # Запуск сервера в фоновом режиме "&"
+    # until ...; do ...; done - bash цикл
+    # Он выполняется, пока команда возвращает ненулевой код (то есть ошибку).
     - name: run server
       run: |
         uv run python manage.py runserver &
-        sleep 10
+        until curl -s http://127.0.0.1:8000/; do sleep 1; done
 
     # Запуск тестов
     - name: test api
