@@ -26,13 +26,13 @@ jobs:
     # Выполнение миграций
     - name: make migrations
       run: |
-        python manage.py makemigrations
-        python manage.py migrate
+        uv run python manage.py makemigrations
+        uv run python manage.py migrate
 
     # Запуск сервера
     - name: run server
       run: |
-        python manage.py runserver &
+        uv run python manage.py runserver &
         sleep 10
 
     # Запуск тестов
