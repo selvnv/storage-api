@@ -1,0 +1,29 @@
+name: Simple Workflow
+on:
+ push:
+  branches:
+    - 'main'
+    - 'dev'
+
+jobs:
+
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - run: echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."
+    # Клонируем репозиторий
+    - uses: actions/checkout@v4
+    # Устанавливаем Python
+    - uses: actions/setup-python@v4
+      with:
+        python-version: '3.13'
+
+    # Установка зависимостей
+    - name: install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install uv
+
+    - name: check_code
+      run: |
+        uv run ruff check && echo -e "\e[32mЛинтер не выявил ошибок\e[0m"

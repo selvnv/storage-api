@@ -25,10 +25,6 @@ jobs:
         pip install uv
         uv sync
 
-    - name: check_code
-      run: |
-        uv run ruff check && echo -e "\e[32mЛинтер не выявил ошибок\e[0m"
-
     # Выполнение миграций
     - name: make migrations
       run: |
